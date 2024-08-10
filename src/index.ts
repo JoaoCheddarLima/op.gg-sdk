@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 import {
+  ChampionData,
+  ChampionResponse,
   MatchHistoryOptionalConfigurableParams,
   MatchHistoryResponse,
   UserChampionStatOptionalConfigurableParams,
@@ -65,5 +67,15 @@ export default class OPGG {
         const response: UserChampionStatsResponse = (await axios.get(endpoint.href)).data;
 
         return response;
+    }
+
+    public async getGameChampions(): Promise<ChampionData[] | void> {
+        try {
+            const response: ChampionResponse = await (await fetch("https://lol-web-api.op.gg/api/v1.0/internal/bypass/meta/champions?hl=en_US")).json();
+
+            return response.data;
+        } catch (err) {
+            
+        }
     }
 }

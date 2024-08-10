@@ -27,6 +27,9 @@ opClient.getMatchHistory()
 
 opClient.getChampionStats()
     .then(console.log);
+
+opClient.getGameChampions()
+    .then(console.log);
 ```
 
 ## All Implemented API methods
@@ -34,6 +37,7 @@ opClient.getChampionStats()
 ```ts
 opClient.getMatchHistory()
 opClient.getChampionStats()
+opClient.getGameChampions()
 ```
 
 # Disclaimer
