@@ -69,13 +69,18 @@ export default class OPGG {
         return response;
     }
 
+    /**
+     * Get a full list of game champions
+     * @returns {Promise<ChampionData[] | void>} - Game champions
+     */
     public async getGameChampions(): Promise<ChampionData[] | void> {
         try {
-            const response: ChampionResponse = await (await fetch("https://lol-web-api.op.gg/api/v1.0/internal/bypass/meta/champions?hl=en_US")).json();
+            const endpoint = new URL(this.baseUrl.href + `/meta/champions?hl=en_US`);
+            const response: ChampionResponse = (await axios.get(endpoint.href)).data;
 
             return response.data;
         } catch (err) {
-            
+
         }
     }
 }
