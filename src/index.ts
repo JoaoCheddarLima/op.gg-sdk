@@ -18,7 +18,7 @@ import { addParamsByObject } from './utils';
  */
 export default class OPGG {
     private userId: string | undefined;
-    private baseUrl: URL = new URL('https://lol-web-api.op.gg/api/v1.0/internal/bypass');
+    public static baseUrl: URL = new URL('https://lol-web-api.op.gg/api/v1.0/internal/bypass');
 
     constructor(userId: string, ignoreValidation?: Boolean) {
         this.userId = userId;
@@ -44,7 +44,7 @@ export default class OPGG {
     }): Promise<MatchHistoryResponse> {
         if (params.limit <= 0 || params.limit > 20) throw new Error('Limit must be between 1 and 20');
 
-        const endpoint = new URL(this.baseUrl.href + `/games/br/summoners/${this.userId}`);
+        const endpoint = new URL(OPGG.baseUrl.href + `/games/br/summoners/${this.userId}`);
         addParamsByObject(endpoint, params);
 
         const response: MatchHistoryResponse = (await axios.get(endpoint.href)).data;
@@ -61,7 +61,7 @@ export default class OPGG {
         game_type: 'SOLORANKED',
         season_id: 27
     }): Promise<UserChampionStatsResponse> {
-        const endpoint = new URL(this.baseUrl.href + `/summoners/br/${this.userId}/most-champions/rank`);
+        const endpoint = new URL(OPGG.baseUrl.href + `/summoners/br/${this.userId}/most-champions/rank`);
         addParamsByObject(endpoint, params);
 
         const response: UserChampionStatsResponse = (await axios.get(endpoint.href)).data;
@@ -73,7 +73,7 @@ export default class OPGG {
      * Get a full list of game champions
      * @returns {Promise<ChampionData[] | void>} - Game champions
      */
-    public async getGameChampions(): Promise<ChampionData[] | void> {
+    public static async getGameChampions(): Promise<ChampionData[] | void> {
         try {
             const endpoint = new URL(this.baseUrl.href + `/meta/champions?hl=en_US`);
             const response: ChampionResponse = (await axios.get(endpoint.href)).data;
